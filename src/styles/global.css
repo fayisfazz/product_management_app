@@ -1,0 +1,39 @@
+/* src/styles/global.css */
+.product-management {
+    padding: 20px;
+    max-width: 600px;
+    margin: auto;
+  }
+  
+  .product-form {
+    margin-bottom: 20px;
+  }
+  
+  .product-form input {
+    margin-right: 10px;
+    padding: 8px;
+  }
+  
+  .product-form button {
+    padding: 8px 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .product-list {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .product-item {
+    margin: 10px 0;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .product-item button {
+    margin-left: 10px;
+  }
+  
