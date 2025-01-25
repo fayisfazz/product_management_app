@@ -1,5 +1,6 @@
 import type { APIRoute } from "astro";
 import { readJSONFile, writeJSONFile } from "../../../utils/file";
+import { v4 as uuidv4 } from 'uuid';
 
 export const prerender = false;
 
@@ -8,12 +9,13 @@ export const GET: APIRoute = async () => {
   return new Response(JSON.stringify(products), { status: 200 });
 };
 
+
 export const POST: APIRoute = async ({ request }) => {
     const newProduct = await request.json();    
   const products = await readJSONFile();
 
   // Generate a new ID for the product
-  newProduct.id = (products.length + 1).toString();
+  newProduct.id = uuidv4()
 
   products.push(newProduct);
   await writeJSONFile(products);
@@ -24,7 +26,7 @@ export const POST: APIRoute = async ({ request }) => {
 
 
 export const DELETE: APIRoute = async ({ request }) => {
-  const { product:{id} } = await request.json();
+  const {id} = await request.json();
   if (!id) {
     return new Response(JSON.stringify({ error: "Missing ID parameter" }), {
       status: 400,
@@ -69,7 +71,6 @@ export const PUT: APIRoute = async ({  request }) => {
   try {
     const products = await readJSONFile();
     const productIndex = products.findIndex((product: any) => product.id === data.id);
-
     if (productIndex === -1) {
       return new Response(JSON.stringify({ error: "Product not found" }), {
         status: 404,
@@ -94,5 +95,7 @@ export const PUT: APIRoute = async ({  request }) => {
     });
   }
 };
+
+
 
 

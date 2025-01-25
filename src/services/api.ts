@@ -66,3 +66,10 @@ export async function removeCartItem(product:any): Promise<void> {
 });
   if (!response.ok) throw new Error('Failed to remove cart item');
 }
+
+
+export async function fetchDiscounts(): Promise<Product[]> {
+  const response = await fetch(`${BASE_URL}/cart/discount`);
+  if (!response.ok) throw new Error('Failed to fetch products');
+  return response.json();
+}

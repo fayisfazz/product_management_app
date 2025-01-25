@@ -3,25 +3,20 @@ import { readCartJSONFile, writeCartJSONFile } from "../../../utils/file";
 
 export const prerender = false;
 
-// GET: Retrieve current cart items
 export const GET: APIRoute = async () => {
   const cart = await readCartJSONFile();
   return new Response(JSON.stringify(cart), { status: 200 });
 };
 
-// POST: Add an item to the cart
 export const POST: APIRoute = async ({ request }) => {
   const newItem = await request.json();
   const cart = await readCartJSONFile();
 
-  // Check if the item already exists in the cart
   const existingItem = cart.find((item: any) => item.id === newItem.id);
 
   if (existingItem) {
-    // If the item already exists, update its quantity
     existingItem.quantity += newItem.quantity;
   } else {
-    // Otherwise, add the new item to the cart with an initial quantity
     newItem.quantity = newItem.quantity || 1;
     cart.push(newItem);
   }
@@ -31,7 +26,6 @@ export const POST: APIRoute = async ({ request }) => {
   return new Response(JSON.stringify(newItem), { status: 201 });
 };
 
-// PUT: Update quantity of an existing item in the cart
 export const PUT: APIRoute = async ({ request }) => {
   const updatedItem = await request.json();
   const cart = await readCartJSONFile();
@@ -51,7 +45,6 @@ export const PUT: APIRoute = async ({ request }) => {
   return new Response(JSON.stringify(cart[itemIndex]), { status: 200 });
 };
 
-// DELETE: Remove an item from the cart
 export const DELETE: APIRoute = async ({ request }) => {
   const { id } = await request.json();
   const cart = await readCartJSONFile();
